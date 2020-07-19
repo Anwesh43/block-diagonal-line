@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
-import {maxScale, divideScale} from './utils'
+import {sinify, divideScale} from './utils'
 
-const useAnimatedScale = (scGap, delay) => {
+export const useAnimatedScale = (scGap, delay) => {
     const [scale, setScale] = useState(0)
     const [animated, setAnimated] = useState(false)
     return {
@@ -15,7 +15,7 @@ const useAnimatedScale = (scGap, delay) => {
                     setScale(currScale)
                     if (currScale > 1) {
                         setScale(0)
-                        setAnimated(true)
+                        setAnimated(false)
                         clearInterval(interval)
                     }
                 }, delay)
@@ -24,8 +24,8 @@ const useAnimatedScale = (scGap, delay) => {
     }
 }
 
-const useDimension = () => {
-    const [w. setW] = useState(window.innerWidth)
+export const useDimension = () => {
+    const [w, setW] = useState(window.innerWidth)
     const [h, setH] = useState(window.innerHeight)
     useEffect(() => {
         setW(window.innerWidth)
@@ -62,10 +62,10 @@ export const useStyle = (w, h, scale) => {
 
         getDiagonalLine(i) {
             const sfi = divideScale(sf, i, 2)
-            const left = `${size + (w - 2 * size) * i * sfi}px`
-            const top = `${size + (h - 2 * size) * ((1 - i) * sfi}px`
+            const left = `${size}px`
+            const top = `${size + (h - 2 * size) * i}px`
             const width = `${lineSize * (1 - i) + (w - size) * i * sfi}px`
-            const height = `${lineSize * i + (w - size) * (1 - i) * sfi}px`
+            const height = `${lineSize * i + (h - 2 * size) * (1 - i) * sfi}px`
             return {position, top, left, width, height, background}
         }
     }
