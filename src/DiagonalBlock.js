@@ -6,7 +6,7 @@ const Comp = ({style}) => {
 }
 const DiagonalBlock = ({w, h, scale, onClick}) => {
     const {getDiagonalLine, getDiagonalBlock} = useStyle(w, h, i)
-    return <div>
+    return <div onClick = {onClick}>
         {[0, 1].map(i => <Comp key = {`line_${i}`} style = {getDiagonalLine(i)}/>)}
         <Comp key = {`diagonalline`} style = {getDiagonalBlock()}/>
     </div>
