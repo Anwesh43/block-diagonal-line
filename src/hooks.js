@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import {maxScale, divideScale} from './utils'
 
 const useAnimatedScale = (scGap, delay) => {
     const [scale, setScale] = useState(0)
@@ -31,7 +32,7 @@ const useDimension = () => {
         setH(window.innerHeight)
         return () => {
             window.onresize = () => {
-                
+
             }
         }
     })
@@ -39,5 +40,33 @@ const useDimension = () => {
         w,
         h,
 
+    }
+}
+
+export const useStyle = (w, h, scale) => {
+    const size = Math.min(w, h) / 10
+    const sf = sinify(scale)
+    const position = 'absolute'
+    const  width = `${size}px`
+    const height = `${size}px`
+    const sf1 = divideScale(sf, 0, 2)
+    const sf2 = divideScale(sf, 1, 2)
+    const background = '#3F51B5'
+    const lineSize = Math.min(w, h) / 90
+    return {
+        getDiagonalBlock() {
+            const left = `${size + (w - 2 * size) * sf}px`
+            const top = `${size + (h - 2 * size) * sf}px`
+            return {position, left, top, background, width, height}
+        },
+
+        getDiagonalLine(i) {
+            const sfi = divideScale(sf, i, 2)
+            const left = `${size + (w - 2 * size) * i * sfi}px`
+            const top = `${size + (h - 2 * size) * ((1 - i) * sfi}px`
+            const width = `${lineSize * (1 - i) + (w - size) * i * sfi}px`
+            const height = `${lineSize * i + (w - size) * (1 - i) * sfi}px`
+            return {position, top, left, width, height, background}
+        }
     }
 }
